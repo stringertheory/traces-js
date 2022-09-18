@@ -1,0 +1,33 @@
+{
+  "name": "traces-js",
+  "version": "0.1.0",
+  "description": "A javascript library for unevenly-spaced time series.",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild index.js --bundle --outfile=out.js",
+    "test": "npx mocha-esbuild \"test/**.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stringertheory/traces-js.git"
+  },
+  "keywords": [
+    "iot",
+    "math",
+    "statistics",
+    "time",
+    "series"
+  ],
+  "author": "Mike Stringer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stringertheory/traces-js/issues"
+  },
+  "homepage": "https://github.com/stringertheory/traces-js#readme",
+  "devDependencies": {
+    "@rtvision/mocha-esbuild": "^0.1.8",
+    "chai": "^4.3.6",
+    "esbuild": "^0.15.8",
+    "mocha": "^10.0.0"
+  }
+}
