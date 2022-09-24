@@ -1,5 +1,4 @@
 import hello from "./src/hello"
+import {Trace} from "./src/trace"
 
-export {
-  hello
-}
+export {hello, Trace}
