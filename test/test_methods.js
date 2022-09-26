@@ -89,4 +89,26 @@ describe("testing methods", function () {
     assert.deepEqual(trace.nextInterval(tp), undefined);
     assert.deepEqual(trace.previousInterval(tp), [t2, t3, 1]);
   });
+  it("should slice correctly", function () {
+    let trace = new Trace([], 0);
+    trace.set(0, 1);
+    trace.set(1, 0);
+    trace.set(3, 1);
+    trace.set(4, 0);
+
+    let slice = trace.slice({ start: 0.5, end: 4.5 });
+    assert.deepEqual(
+      [...slice],
+      [
+        [0.5, 1],
+        [1, 0],
+        [3, 1],
+        [4, 0],
+        [4.5, 0],
+      ]
+    );
+
+    // equal itself
+    assert.deepEqual([...trace], [...trace.slice()]);
+  });
 });

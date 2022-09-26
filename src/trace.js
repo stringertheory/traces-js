@@ -148,4 +148,13 @@ export class Trace {
       return this.getInterval(t0);
     }
   }
+  slice({ start = undefined, end = undefined } = {}) {
+    let result = new Trace([], this.defaultValue);
+    let t0, t1, value;
+    for ([t0, t1, value] of this.intervals({ start: start, end: end })) {
+      result.set(t0, value);
+    }
+    result.set(t1, this.get(t1));
+    return result;
+  }
 }
