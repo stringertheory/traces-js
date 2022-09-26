@@ -105,4 +105,24 @@ export class Trace {
       yield [interval_t0, end, interval_value];
     }
   }
+  firstKey() {
+    return this.list[0];
+  }
+  lastKey() {
+    return this.list[this.list.length - 1];
+  }
+  firstValue() {
+    return this.get(this.firstKey());
+  }
+  lastValue() {
+    return this.get(this.lastKey());
+  }
+  firstEntry() {
+    let key = this.firstKey();
+    return [key, this.get(key)];
+  }
+  lastEntry() {
+    let key = this.lastKey();
+    return [key, this.get(key)];
+  }
 }
