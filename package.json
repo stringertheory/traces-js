@@ -6,10 +6,11 @@
   "scripts": {
     "build": "esbuild index.js --bundle --outfile=out.js",
     "test": "npx mocha-esbuild \"test/**.js\"",
-    "lint": "npx eslint \"src/**.js\" \"test/**.js\"",
-    "lint:fix": "npx eslint --fix \"src/**.js\" \"test/**.js\"",
-    "format": "npx prettier --check \"src/**.js\" \"test/**.js\"",
-    "format:fix": "npx prettier --write \"src/**.js\" \"test/**.js\""
+    "lint": "npx eslint src test",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier --check src test",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run lint:fix && npm run prettier:fix"
   },
   "repository": {
     "type": "git",
