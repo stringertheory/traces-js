@@ -110,6 +110,5 @@ describe("testing methods", function () {
 
     // equal itself
     assert.deepEqual([...trace], [...trace.slice()]);
-    assert.equal(0, 1);
   });
 });
