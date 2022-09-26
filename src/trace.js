@@ -7,8 +7,8 @@ function keyof(value) {
 }
 
 export class Trace {
-  constructor(items, defaultValue) {
-    this.map = new InternMap(items);
+  constructor(entries, defaultValue) {
+    this.map = new InternMap(entries);
     this.list = [...this.map.keys()].sort((a, b) => keyof(a) - keyof(b));
     this.defaultValue = defaultValue;
   }
@@ -62,15 +62,15 @@ export class Trace {
   get size() {
     return this.map.size;
   }
-  distribution(
-    start,
-    end,
+  distribution({
+    start = undefined,
+    end = undefined,
     normalize = true,
-    durationFunction = (a, b) => b - a
-  ) {
+    durationFunction = (a, b) => b - a,
+  } = {}) {
     let result = new Map();
     let total = 0;
-    for (let [t0, t1, value] of this.iterperiods(start, end)) {
+    for (let [t0, t1, value] of this.iterperiods({ start: start, end: end })) {
       let duration = durationFunction(t0, t1);
       total += duration;
       result.set(value, (result.get(value) ?? 0) + duration);
@@ -82,7 +82,7 @@ export class Trace {
     }
     return result;
   }
-  *iterperiods(start, end) {
+  *iterperiods({ start = undefined, end = undefined } = {}) {
     const left = start ?? this.list[0];
     const right = end ?? this.list[this.list.length - 1];
     const start_index = bisectRight(this.list, left);

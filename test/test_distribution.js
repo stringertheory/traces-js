@@ -17,17 +17,17 @@ describe("testing distribution", function () {
     assert.equal(distribution.get(0), 2 / 4);
     assert.equal(distribution.get(1), 2 / 4);
 
-    distribution = trace.distribution(0, 6);
+    distribution = trace.distribution({ start: 0, end: 6 });
 
     assert.equal(distribution.get(0), 4 / 6);
     assert.equal(distribution.get(1), 2 / 6);
 
-    distribution = trace.distribution(0, 6, false);
+    distribution = trace.distribution({ start: 0, end: 6, normalize: false });
 
     assert.equal(distribution.get(0), 4);
     assert.equal(distribution.get(1), 2);
 
-    distribution = trace.distribution(-1, 6, false);
+    distribution = trace.distribution({ start: -1, end: 6, normalize: false });
 
     assert.equal(distribution.get(0), 5);
     assert.equal(distribution.get(1), 2);
@@ -44,35 +44,35 @@ describe("testing distribution", function () {
     assert.equal(distribution.get(0), 2 / 4);
     assert.equal(distribution.get(1), 2 / 4);
 
-    distribution = trace.distribution(
-      new Date(2042, 0, 0),
-      new Date(2042, 0, 6)
-    );
+    distribution = trace.distribution({
+      start: new Date(2042, 0, 0),
+      end: new Date(2042, 0, 6),
+    });
     assert.equal(distribution.get(0), 4 / 6);
     assert.equal(distribution.get(1), 2 / 6);
 
-    distribution = trace.distribution(
-      new Date(2042, 0, 0),
-      new Date(2042, 0, 6),
-      false
-    );
+    distribution = trace.distribution({
+      start: new Date(2042, 0, 0),
+      end: new Date(2042, 0, 6),
+      normalize: false,
+    });
     assert.equal(distribution.get(0), 345600000);
     assert.equal(distribution.get(1), 172800000);
 
-    distribution = trace.distribution(
-      new Date(2042, 0, 0),
-      new Date(2042, 0, 7),
-      true
-    );
+    distribution = trace.distribution({
+      start: new Date(2042, 0, 0),
+      end: new Date(2042, 0, 7),
+      normalize: true,
+    });
     assert.equal(distribution.get(0), 5 / 7);
     assert.equal(distribution.get(1), 2 / 7);
 
-    distribution = trace.distribution(
-      new Date(2042, 0, 0),
-      new Date(2042, 0, 6),
-      false,
-      timeDay.count
-    );
+    distribution = trace.distribution({
+      start: new Date(2042, 0, 0),
+      end: new Date(2042, 0, 6),
+      normalize: false,
+      durationFunction: timeDay.count,
+    });
     assert.equal(distribution.get(0), 4);
     assert.equal(distribution.get(1), 2);
   });
