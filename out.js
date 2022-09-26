@@ -116,10 +116,13 @@
   }
 
   // src/trace.js
+  function keyof2(value) {
+    return value !== null && typeof value === "object" ? value.valueOf() : value;
+  }
   var Trace = class {
     constructor(items, defaultValue) {
       this.map = new InternMap(items);
-      this.list = [...this.map.keys()].sort((a, b) => a - b);
+      this.list = [...this.map.keys()].sort((a, b) => keyof2(a) - keyof2(b));
       this.defaultValue = defaultValue;
     }
     get = (key) => {
@@ -172,7 +175,7 @@
     get size() {
       return this.map.size;
     }
-    distribution(start, end, normalize = false, durationFunction = (a, b) => b - a) {
+    distribution(start, end, normalize = true, durationFunction = (a, b) => b - a) {
       let result = /* @__PURE__ */ new Map();
       let total = 0;
       for (let [t0, t1, value] of this.iterperiods(start, end)) {

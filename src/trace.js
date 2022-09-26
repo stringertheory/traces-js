@@ -1,10 +1,15 @@
-import {bisectRight} from "d3-array";
-import {InternMap} from "internmap";
+import { bisectRight } from "d3-array";
+import { InternMap } from "internmap";
+
+// same keyof function used by internmap
+function keyof(value) {
+  return value !== null && typeof value === "object" ? value.valueOf() : value;
+}
 
 export class Trace {
   constructor(items, defaultValue) {
     this.map = new InternMap(items);
-    this.list = [...this.map.keys()].sort((a, b) => a - b);
+    this.list = [...this.map.keys()].sort((a, b) => keyof(a) - keyof(b));
     this.defaultValue = defaultValue;
   }
   get = (key) => {
@@ -28,13 +33,13 @@ export class Trace {
   };
   has = (key) => {
     return this.map.has(key);
-  }
+  };
   delete = (key) => {
     const hadKey = this.map.delete(key);
     if (hadKey) {
       this.list.splice(bisectRight(this.list, key) - 1, 1);
     }
-  }
+  };
   entries() {
     return [...this];
   }
