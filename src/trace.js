@@ -125,4 +125,27 @@ export class Trace {
     let key = this.lastKey();
     return [key, this.get(key)];
   }
+  getInterval(t) {
+    const index = bisectRight(this.list, t);
+    const t0 = this.list[index - 1] ?? -Infinity;
+    const t1 = this.list[index] ?? Infinity;
+    return [t0, t1, this.get(t0)];
+  }
+  nextInterval(t) {
+    const index = bisectRight(this.list, t);
+    if (index === this.list.length) {
+      return undefined;
+    } else {
+      return this.getInterval(this.list[index]);
+    }
+  }
+  previousInterval(t) {
+    const index = bisectRight(this.list, t);
+    const t0 = this.list[index - 2] ?? -Infinity;
+    if (index === 0) {
+      return undefined;
+    } else {
+      return this.getInterval(t0);
+    }
+  }
 }
