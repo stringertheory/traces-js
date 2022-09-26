@@ -70,7 +70,7 @@ export class Trace {
   } = {}) {
     let result = new Map();
     let total = 0;
-    for (let [t0, t1, value] of this.iterperiods({ start: start, end: end })) {
+    for (let [t0, t1, value] of this.intervals({ start: start, end: end })) {
       let duration = durationFunction(t0, t1);
       total += duration;
       result.set(value, (result.get(value) ?? 0) + duration);
@@ -82,7 +82,7 @@ export class Trace {
     }
     return result;
   }
-  *iterperiods({ start = undefined, end = undefined } = {}) {
+  *intervals({ start = undefined, end = undefined } = {}) {
     const left = start ?? this.list[0];
     const right = end ?? this.list[this.list.length - 1];
     const start_index = bisectRight(this.list, left);
