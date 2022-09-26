@@ -33,6 +33,10 @@ describe("testing distribution", function () {
     assert.equal(distribution.get(1), 2);
   });
 
+  it("should test github actions", function () {
+    assert.equal(true, false);
+  });
+
   it("should work with Dates as keys", function () {
     let trace = new Trace([], 0);
     trace.set(new Date(2042, 0, 0), 1);
