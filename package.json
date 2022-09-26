@@ -27,10 +27,12 @@
   "devDependencies": {
     "@rtvision/mocha-esbuild": "^0.1.8",
     "chai": "^4.3.6",
+    "d3-time": "^3.0.0",
     "esbuild": "^0.15.8",
     "mocha": "^10.0.0"
   },
   "dependencies": {
-    "d3-array": "^3.2.0"
+    "d3-array": "^3.2.0",
+    "internmap": "^2.0.3"
   }
 }

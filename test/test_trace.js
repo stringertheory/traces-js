@@ -40,6 +40,27 @@ describe('testing basics', function () {
     
   });
 
+  it('should not allow duplicate keys', function () {
+
+    let trace = new Trace()
+    trace.set(1, "red")
+    trace.set(1, "green")
+    
+    assert.equal(trace.map.size, 1)
+        
+  });
+
+  it('should not allow duplicate keys (even for Dates)', function () {
+
+    let trace = new Trace()
+    trace.set(new Date(Date.UTC(2001, 0, 1)), "red")
+    trace.set(new Date(Date.UTC(2001, 0, 1)), "green")
+    
+    assert.equal(trace.map.size, 1)
+    
+  });
+  
+  
   it('should not depend on order of setting values', function () {
     
     let traceB = new Trace();
@@ -80,6 +101,49 @@ describe('testing basics', function () {
     
     assert.equal(traceB.get(2), 0);
     assert.equal(traceB.get(6), 10);
+    
+  });
+
+  it('should be able to delete items', function () {
+
+    let trace = new Trace([], 0);
+    trace.set(3, 1)
+    trace.set(6, 2)
+    trace.set(1.2, 3)
+
+    trace.delete(1.2)
+    assert.deepEqual([...trace], [[3, 1], [6, 2]])
+    
+    trace.delete(6)
+    assert.deepEqual([...trace], [[3, 1]])
+
+    trace.delete(9)
+    assert.deepEqual([...trace], [[3, 1]])
+
+    trace.delete(3)
+    assert.deepEqual([...trace], [])
+
+    trace.delete(3)
+    assert.deepEqual([...trace], [])
+
+    trace = new Trace([
+      [new Date(2012, 1, 1), 1],
+      [new Date(2012, 1, 2), 5]
+    ], 0);
+
+    assert.deepEqual([...trace], [
+      [new Date(2012, 1, 1), 1],
+      [new Date(2012, 1, 2), 5]
+    ])
+
+    trace.delete(new Date(2012, 1, 1))
+    assert.deepEqual([...trace], [[new Date(2012, 1, 2), 5]]);
+
+    trace.delete(new Date(2012, 8, 1))
+    assert.deepEqual([...trace], [[new Date(2012, 1, 2), 5]]);
+    
+    trace.delete(new Date(2012, 1, 2))
+    assert.deepEqual([...trace], []);
     
   });
   
