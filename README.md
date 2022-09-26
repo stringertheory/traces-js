@@ -1,7 +1,8 @@
+![nodejs continuous integration status](https://github.com/stringertheory/traces-js/actions/workflows/node.js.yml/badge.svg?branch=main)
+
 # traces-js
 
-Eventually, a library for unevenly-spaced time series. For now, trying
-to learn how to package something on npm.
+A library for unevenly-spaced time series.
 
 # Thank you
 
