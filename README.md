@@ -1,4 +1,4 @@
-![nodejs continuous integration status](https://github.com/stringertheory/traces-js/actions/workflows/node.js.yml/badge.svg?branch=main)
+![nodejs continuous integration status](https://github.com/stringertheory/traces-js/actions/workflows/node.js.yml/badge.svg?branch=main&event=push)
 
 # traces-js
 
