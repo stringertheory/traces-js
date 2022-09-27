@@ -179,6 +179,21 @@ export class Trace {
   *fallingEdges() {
     yield* this.transitions((a, b) => !nullish(a) && !nullish(b) && a > b);
   }
+  mean({ start = undefined, end = undefined } = {}) {
+    const distribution = this.distribution({
+      start: start,
+      end: end,
+      normalize: false,
+    });
+    distribution.delete(null);
+    distribution.delete(undefined);
+    const totalDuration = [...distribution.values()].reduce((a, b) => a + b, 0);
+    return (
+      [...distribution.entries()]
+        .map(([value, duration]) => value * duration)
+        .reduce((a, b) => a + b, 0) / totalDuration
+    );
+  }
 }
 
 function nullish(value) {
