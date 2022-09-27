@@ -1,15 +1,10 @@
 import { bisectRight } from "d3-array";
 import { InternMap } from "internmap";
 
-// same keyof function used by internmap
-function keyof(value) {
-  return value !== null && typeof value === "object" ? value.valueOf() : value;
-}
-
 export class Trace {
   constructor(entries, defaultValue) {
     this.map = new InternMap(entries);
-    this.list = [...this.map.keys()].sort((a, b) => keyof(a) - keyof(b));
+    this.list = [...this.map.keys()].sort((a, b) => a - b);
     this.defaultValue = defaultValue;
   }
   get = (key) => {
