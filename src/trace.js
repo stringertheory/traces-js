@@ -157,4 +157,16 @@ export class Trace {
     result.set(t1, this.get(t1));
     return result;
   }
+  group({ start = undefined, end = undefined } = {}) {
+    const groupedByValue = new InternMap();
+    for (const [t0, t1, value] of this.intervals({ start: start, end: end })) {
+      const group = groupedByValue.get(value);
+      if (group) {
+        group.push([t0, t1]);
+      } else {
+        groupedByValue.set(value, [[t0, t1]]);
+      }
+    }
+    return groupedByValue;
+  }
 }

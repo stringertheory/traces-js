@@ -111,4 +111,46 @@ describe("testing methods", function () {
     // equal itself
     assert.deepEqual([...trace], [...trace.slice()]);
   });
+  it("should group by value", function () {
+    let trace = new Trace([], 0);
+    trace.set(0, 1);
+    trace.set(1, 0);
+    trace.set(3, 1);
+    trace.set(4, 0);
+
+    assert.deepEqual(
+      trace.group(),
+      new Map([
+        [0, [[1, 3]]],
+        [
+          1,
+          [
+            [0, 1],
+            [3, 4],
+          ],
+        ],
+      ])
+    );
+
+    assert.deepEqual(
+      trace.group({ start: -2, end: 7 }),
+      new Map([
+        [
+          0,
+          [
+            [-2, 0],
+            [1, 3],
+            [4, 7],
+          ],
+        ],
+        [
+          1,
+          [
+            [0, 1],
+            [3, 4],
+          ],
+        ],
+      ])
+    );
+  });
 });
