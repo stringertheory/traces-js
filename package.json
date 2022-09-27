@@ -1,6 +1,6 @@
 {
   "name": "traces-js",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A javascript library for unevenly-spaced time series.",
   "main": "index.js",
   "scripts": {
