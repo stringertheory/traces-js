@@ -118,39 +118,94 @@ describe("testing methods", function () {
     trace.set(3, 1);
     trace.set(4, 0);
 
+    // prettier-ignore
     assert.deepEqual(
       trace.group(),
       new Map([
-        [0, [[1, 3]]],
-        [
-          1,
-          [
-            [0, 1],
-            [3, 4],
-          ],
-        ],
+	[0, [[1, 3]]],
+	[1, [[0, 1], [3, 4]]]
       ])
     );
 
+    // prettier-ignore
     assert.deepEqual(
-      trace.group({ start: -2, end: 7 }),
+      trace.group({start: -2, end: 7}),
       new Map([
-        [
-          0,
-          [
-            [-2, 0],
-            [1, 3],
-            [4, 7],
-          ],
-        ],
-        [
-          1,
-          [
-            [0, 1],
-            [3, 4],
-          ],
-        ],
+	[0, [[-2, 0], [1, 3], [4, 7]]],
+	[1, [[0, 1], [3, 4]]]
       ])
+    );
+  });
+  it("should get rising and falling edges", function () {
+    let trace = new Trace([], 0);
+    trace.set(0, 1);
+    trace.set(1, 0);
+    trace.set(3, 1);
+    trace.set(4, 0);
+
+    assert.deepEqual(
+      [...trace.risingEdges()],
+      [
+        [0, 0, 1],
+        [3, 0, 1],
+      ]
+    );
+
+    assert.deepEqual(
+      [...trace.fallingEdges()],
+      [
+        [1, 1, 0],
+        [4, 1, 0],
+      ]
+    );
+
+    trace = new Trace([]);
+    trace.set(0, 1);
+    trace.set(1, 0);
+    trace.set(3, 1);
+    trace.set(4, 0);
+
+    assert.deepEqual([...trace.risingEdges()], [[3, 0, 1]]);
+
+    trace = new Trace([], 2);
+    trace.set(0, 1);
+    trace.set(1, 0);
+    trace.set(3, 1);
+    trace.set(4, 0);
+
+    assert.deepEqual(
+      [...trace.fallingEdges()],
+      [
+        [0, 2, 1],
+        [1, 1, 0],
+        [4, 1, 0],
+      ]
+    );
+
+    trace = new Trace([], 0);
+    trace.set(0, 1);
+    trace.set(1, 0);
+    trace.set(3, 1);
+    trace.set(4, 0);
+    trace.set(6, null);
+    trace.set(7, 1);
+    trace.set(9, 0);
+
+    assert.deepEqual(
+      [...trace.risingEdges()],
+      [
+        [0, 0, 1],
+        [3, 0, 1],
+      ]
+    );
+
+    assert.deepEqual(
+      [...trace.fallingEdges()],
+      [
+        [1, 1, 0],
+        [4, 1, 0],
+        [9, 1, 0],
+      ]
     );
   });
 });

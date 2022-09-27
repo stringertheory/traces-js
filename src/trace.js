@@ -164,4 +164,23 @@ export class Trace {
     }
     return groupedByValue;
   }
+  *transitions(filter = () => true) {
+    let previousValue = this.defaultValue;
+    for (let [t, value] of this) {
+      if (filter(previousValue, value)) {
+        yield [t, previousValue, value];
+      }
+      previousValue = value;
+    }
+  }
+  *risingEdges() {
+    yield* this.transitions((a, b) => !nullish(a) && !nullish(b) && a < b);
+  }
+  *fallingEdges() {
+    yield* this.transitions((a, b) => !nullish(a) && !nullish(b) && a > b);
+  }
+}
+
+function nullish(value) {
+  return value === undefined || value === null;
 }
